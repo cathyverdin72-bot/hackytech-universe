@@ -24,6 +24,7 @@ import {
   Zap,
 } from "lucide-react";
 import UniverseScene from "@/components/UniverseScene";
+import WorldDemo from "@/components/WorldDemo";
 
 const worlds = [
   {
@@ -74,7 +75,9 @@ const worlds = [
     color: "cyan",
     capabilities: ["Resilience", "Adaptation", "Recovery"],
   },
-];
+] as const;
+
+type WorldId = (typeof worlds)[number]["id"];
 
 const principles = [
   {
@@ -111,7 +114,7 @@ const principles = [
 
 export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [selectedWorld, setSelectedWorld] = useState("eman");
+  const [selectedWorld, setSelectedWorld] = useState<WorldId>("eman");
 
   const activeWorld =
     worlds.find((world) => world.id === selectedWorld) ?? worlds[0];
@@ -284,7 +287,8 @@ export default function HomePage() {
           </div>
           <p>
             Each world has a distinct purpose. Explore how the pieces fit
-            together, then select a world to inspect its role.
+            together, then select a world to inspect its role and run its
+            demonstration.
           </p>
         </div>
 
@@ -326,7 +330,9 @@ export default function HomePage() {
             <activeWorld.icon size={24} />
           </div>
           <div className="detail-main">
-            <span className="detail-kicker">WORLD SELECTED / {activeWorld.number}</span>
+            <span className="detail-kicker">
+              WORLD SELECTED / {activeWorld.number}
+            </span>
             <h3>{activeWorld.name}</h3>
             <p>{activeWorld.description}</p>
             <div className="capability-list">
@@ -340,13 +346,22 @@ export default function HomePage() {
           </div>
           <div className="detail-status">
             <span className="detail-status-label">CURRENT EXPERIENCE</span>
-            <strong>Exploration preview</strong>
-            <span>Backend integration not connected</span>
+            <strong>Local simulation</strong>
+            <span>Production integration not connected</span>
           </div>
         </div>
+
+        <WorldDemo
+          key={activeWorld.id}
+          worldId={activeWorld.id}
+          worldName={activeWorld.name}
+        />
       </section>
 
-      <section className="architecture-section section-block" id="architecture">
+      <section
+        className="architecture-section section-block"
+        id="architecture"
+      >
         <div className="section-heading">
           <div>
             <div className="eyebrow">
