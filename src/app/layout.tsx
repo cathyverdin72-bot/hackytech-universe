@@ -15,9 +15,6 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
     title: "HackyTech",
   },
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
 export const viewport: Viewport = {
