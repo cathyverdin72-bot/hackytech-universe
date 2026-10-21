@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Terminal,
 } from "lucide-react";
+import "./WorldDemo.css";
 
 type WorldId = "eman" | "grey" | "businessflow" | "oyosky";
 
@@ -109,16 +110,18 @@ export default function WorldDemo({
       <div className="world-demo-heading">
         <div className="world-demo-title-group">
           <span className="world-demo-icon">
-            <Terminal size={19} />
+            <Terminal size={19} aria-hidden="true" />
           </span>
           <div>
-            <span className="detail-kicker">INTERACTIVE LAB / LOCAL SIMULATION</span>
+            <span className="detail-kicker">
+              INTERACTIVE LAB / LOCAL SIMULATION
+            </span>
             <h3 id="world-demo-title">{scenario.title}</h3>
           </div>
         </div>
 
         <span className="demo-mode-badge">
-          <CircleDot size={11} />
+          <CircleDot size={11} aria-hidden="true" />
           DEMO MODE
         </span>
       </div>
@@ -135,11 +138,19 @@ export default function WorldDemo({
               key={step}
             >
               <span className="demo-step-number">
-                {stepComplete ? <CheckCircle2 size={17} /> : `0${index + 1}`}
+                {stepComplete ? (
+                  <CheckCircle2 size={17} aria-hidden="true" />
+                ) : (
+                  `0${index + 1}`
+                )}
               </span>
               <span className="demo-step-label">{step}</span>
               {index < scenario.steps.length - 1 && (
-                <ArrowRight className="demo-step-arrow" size={15} />
+                <ArrowRight
+                  className="demo-step-arrow"
+                  size={15}
+                  aria-hidden="true"
+                />
               )}
             </div>
           );
@@ -149,7 +160,7 @@ export default function WorldDemo({
       {isComplete ? (
         <div className="demo-result" role="status" aria-live="polite">
           <div className="demo-result-icon">
-            <ShieldCheck size={21} />
+            <ShieldCheck size={21} aria-hidden="true" />
           </div>
           <div className="demo-result-copy">
             <span className="detail-kicker">SIMULATION RESULT</span>
@@ -160,7 +171,9 @@ export default function WorldDemo({
       ) : (
         <div className="demo-ready" role="status">
           <span className="status-dot" />
-          <span>Ready to run. No external systems will be contacted.</span>
+          <span>
+            Ready to run. No external systems will be contacted.
+          </span>
         </div>
       )}
 
@@ -178,7 +191,7 @@ export default function WorldDemo({
               type="button"
               onClick={resetDemo}
             >
-              <RotateCcw size={14} />
+              <RotateCcw size={14} aria-hidden="true" />
               Reset
             </button>
           )}
@@ -188,7 +201,7 @@ export default function WorldDemo({
             type="button"
             onClick={runDemo}
           >
-            <Play size={15} />
+            <Play size={15} aria-hidden="true" />
             {isComplete ? "Run again" : "Run demonstration"}
           </button>
         </div>
