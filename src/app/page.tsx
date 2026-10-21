@@ -23,392 +23,378 @@ import {
   X,
   Zap,
 } from "lucide-react";
+import UniverseScene from "@/components/UniverseScene";
 
-const destinations = [
+const worlds = [
   {
     id: "eman",
+    number: "01",
     name: "EMAN",
-    subtitle: "Intelligence engine",
+    category: "INTELLIGENCE ENGINE",
     description:
-      "The engine connecting business operations, intelligence, and action.",
+      "The engine behind connected business intelligence, reasoning, and coordinated work.",
+    status: "CORE ENGINE",
     icon: BrainCircuit,
-    color: "#65a3ff",
-    status: "Exploration mode",
+    color: "blue",
+    capabilities: ["Reasoning", "Coordination", "Integrations"],
   },
   {
     id: "grey",
+    number: "02",
     name: "Grey",
-    subtitle: "AI orchestration",
+    category: "AI WORKSPACE",
     description:
-      "An intelligent interface for research, reasoning, and controlled workflows.",
-    icon: Orbit,
-    color: "#9e8cff",
-    status: "Exploration mode",
+      "A human-facing AI workspace designed to research, think, create, and execute with oversight.",
+    status: "AI WORKSPACE",
+    icon: Atom,
+    color: "violet",
+    capabilities: ["Research", "Creation", "Human approval"],
   },
   {
     id: "businessflow",
+    number: "03",
     name: "BusinessFlow",
-    subtitle: "Business intelligence",
+    category: "BUSINESS INTELLIGENCE",
     description:
-      "Turn business goals, evidence, and experiments into measurable decisions.",
+      "Turn business questions into evidence, experiments, decisions, and measurable action.",
+    status: "BUSINESS SYSTEM",
     icon: Workflow,
-    color: "#4df0b5",
-    status: "Exploration mode",
+    color: "green",
+    capabilities: ["Understand", "Decide", "Improve"],
   },
   {
     id: "oyosky",
+    number: "04",
     name: "Oyosky",
-    subtitle: "Body-independent intelligence",
+    category: "BODY-INDEPENDENT INTELLIGENCE",
     description:
-      "Explore the idea of intelligence that can operate across different bodies.",
-    icon: Cpu,
-    color: "#54e5ff",
-    status: "Exploration mode",
+      "Explore the long-term vision for intelligence that can operate across different bodies and environments.",
+    status: "RESEARCH",
+    icon: Orbit,
+    color: "cyan",
+    capabilities: ["Resilience", "Adaptation", "Recovery"],
   },
 ];
 
-const pillars = [
+const principles = [
   {
     number: "01",
     title: "THINK",
-    detail: "Reasoning and intelligence",
+    description: "Reason through problems before taking action.",
     icon: BrainCircuit,
   },
   {
     number: "02",
     title: "KNOW",
-    detail: "Knowledge and memory",
-    icon: Layers3,
+    description: "Organize knowledge and preserve useful context.",
+    icon: Network,
   },
   {
     number: "03",
     title: "CREATE",
-    detail: "Ideas into experiences",
-    icon: Atom,
+    description: "Transform ideas into practical digital systems.",
+    icon: Sparkles,
   },
   {
     number: "04",
     title: "ACT",
-    detail: "Controlled real-world action",
+    description: "Execute defined tasks through controlled workflows.",
     icon: Zap,
   },
   {
     number: "05",
     title: "PROTECT",
-    detail: "Security and human control",
+    description: "Keep permissions, security, and human oversight in view.",
     icon: ShieldCheck,
   },
 ];
 
 export default function HomePage() {
-  const [activeDestination, setActiveDestination] = useState<string | null>(
-    null,
-  );
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedWorld, setSelectedWorld] = useState("eman");
 
-  const selectedDestination = destinations.find(
-    (destination) => destination.id === activeDestination,
-  );
+  const activeWorld =
+    worlds.find((world) => world.id === selectedWorld) ?? worlds[0];
 
-  function enterUniverse() {
-    document
-      .getElementById("worlds")
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  function scrollToSection(id: string) {
+    document.getElementById(id)?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+    setMobileMenuOpen(false);
   }
 
   return (
-    <main className="universe-shell">
+    <main className="site-shell">
       <header className="site-header">
-        <div className="container header-inner">
-          <a
-            className="brand"
-            href="#home"
-            aria-label="HackyTech Universe home"
-          >
-            <span className="brand-mark">
-              <Command size={21} strokeWidth={2.2} />
-            </span>
-            <span className="brand-copy">
-              <strong>HACKYTECH</strong>
-              <span>UNIVERSE / 001</span>
-            </span>
-          </a>
+        <a
+          className="brand"
+          href="#overview"
+          aria-label="HackyTech Universe home"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          <span className="brand-mark">
+            <Command size={22} strokeWidth={2.2} />
+          </span>
+          <span className="brand-copy">
+            <strong>HACKYTECH</strong>
+            <span>THE UNIVERSE</span>
+          </span>
+        </a>
 
-          <nav className="desktop-nav" aria-label="Main navigation">
-            <a className="nav-link active" href="#home">
-              Discover
-            </a>
-            <a className="nav-link" href="#worlds">
-              Worlds
-            </a>
-            <a className="nav-link" href="#architecture">
-              Architecture
-            </a>
-          </nav>
+        <nav className="desktop-nav" aria-label="Main navigation">
+          <a href="#overview">Overview</a>
+          <a href="#worlds">Explore worlds</a>
+          <a href="#architecture">Architecture</a>
+        </nav>
 
-          <a className="header-cta" href="#worlds">
-            Enter the universe <ArrowRight size={15} />
-          </a>
+        <button
+          className="header-cta"
+          type="button"
+          onClick={() => scrollToSection("worlds")}
+        >
+          Explore universe <ArrowRight size={15} />
+        </button>
 
-          <button
-            className="mobile-menu-toggle"
-            type="button"
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileMenuOpen}
-            onClick={() => setMobileMenuOpen((open) => !open)}
-          >
-            {mobileMenuOpen ? <X size={21} /> : <Menu size={21} />}
-          </button>
-        </div>
+        <button
+          className="mobile-menu-toggle"
+          type="button"
+          aria-label={mobileMenuOpen ? "Close navigation" : "Open navigation"}
+          aria-expanded={mobileMenuOpen}
+          onClick={() => setMobileMenuOpen((open) => !open)}
+        >
+          {mobileMenuOpen ? <X size={23} /> : <Menu size={23} />}
+        </button>
 
         {mobileMenuOpen && (
           <nav className="mobile-nav" aria-label="Mobile navigation">
-            <a href="#home" onClick={() => setMobileMenuOpen(false)}>
-              Discover
-            </a>
-            <a href="#worlds" onClick={() => setMobileMenuOpen(false)}>
-              Worlds
-            </a>
-            <a
-              href="#architecture"
-              onClick={() => setMobileMenuOpen(false)}
+            <button type="button" onClick={() => scrollToSection("overview")}>
+              Overview <ChevronRight size={17} />
+            </button>
+            <button type="button" onClick={() => scrollToSection("worlds")}>
+              Explore worlds <ChevronRight size={17} />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToSection("architecture")}
             >
-              Architecture
-            </a>
+              Architecture <ChevronRight size={17} />
+            </button>
           </nav>
         )}
       </header>
 
-      <section className="hero container" id="home">
+      <section className="hero-section" id="overview">
         <div className="hero-copy">
           <div className="eyebrow">
             <span className="status-dot" />
-            An interconnected technology universe
+            AN INTERACTIVE TECHNOLOGY ECOSYSTEM
           </div>
 
-          <h1 className="font-display hero-title">
-            Technology is not
+          <h1>
+            Intelligence,
             <br />
-            a collection of tools.
+            <span>in a universe</span>
             <br />
-            <span className="gradient-text">It is a universe.</span>
+            of its own.
           </h1>
 
           <p className="hero-description">
-            Enter the world of HackyTech — where intelligence, software,
-            business, and physical systems connect to turn ambitious ideas
-            into working experiences.
+            Enter the HackyTech Universe — a connected ecosystem of intelligent
+            systems, experimental technology, and practical tools built to turn
+            ideas into action.
           </p>
 
           <div className="hero-actions">
             <button
-              className="primary-button"
+              className="button-primary"
               type="button"
-              onClick={enterUniverse}
+              onClick={() => scrollToSection("worlds")}
             >
               Explore the worlds <ArrowRight size={17} />
             </button>
-            <a className="secondary-button" href="#architecture">
-              Discover the architecture
-            </a>
+            <button
+              className="button-secondary"
+              type="button"
+              onClick={() => scrollToSection("architecture")}
+            >
+              Discover the architecture <ArrowDown size={16} />
+            </button>
           </div>
 
-          <div className="hero-footnote">
-            <Globe2 size={15} />
-            <span>Designed for a connected future</span>
-            <span className="footnote-divider" />
-            <span>Mobile first. Built to scale.</span>
+          <div className="hero-proof">
+            <div className="proof-icon">
+              <Globe2 size={18} />
+            </div>
+            <div>
+              <strong>One connected vision</strong>
+              <span>Intelligence · Infrastructure · Impact</span>
+            </div>
           </div>
         </div>
 
-        <div className="hero-visual" aria-label="Universe visualization preview">
+        <div className="hero-visual">
           <div className="visual-topline">
             <span>
-              <CircleDot size={12} /> UNIVERSE VIEWPORT
+              <CircleDot size={12} /> UNIVERSE CORE
             </span>
-            <span>PREVIEW / 001</span>
+            <span className="live-indicator">
+              <span className="status-dot" /> 3D EXPERIENCE
+            </span>
           </div>
 
-          <div className="orbit-visual" aria-hidden="true">
-            <div className="orbit orbit-one" />
-            <div className="orbit orbit-two" />
-            <div className="orbit orbit-three" />
-
-            <div className="central-core">
-              <div className="core-inner">
-                <Command size={42} strokeWidth={1.4} />
-              </div>
-            </div>
-
-            <div className="orbit-node node-blue">
-              <BrainCircuit size={20} />
-            </div>
-            <div className="orbit-node node-green">
-              <Workflow size={19} />
-            </div>
-            <div className="orbit-node node-purple">
-              <Orbit size={19} />
-            </div>
-            <div className="orbit-node node-cyan">
-              <Cpu size={19} />
-            </div>
-
-            <span className="visual-star star-one" />
-            <span className="visual-star star-two" />
-            <span className="visual-star star-three" />
-            <span className="visual-star star-four" />
-            <span className="visual-star star-five" />
-
+          <div className="orbit-visual">
+            <UniverseScene />
             <div className="floating-label label-top">
-              <span className="label-indicator" />
-              INTELLIGENCE
+              <span className="label-pulse" />
+              <span>
+                <strong>INTELLIGENCE</strong>
+                <small>Core systems</small>
+              </span>
             </div>
             <div className="floating-label label-bottom">
-              <Network size={13} /> CONNECTED SYSTEMS
+              <span className="label-pulse label-pulse-green" />
+              <span>
+                <strong>CONNECTED WORLDS</strong>
+                <small>One evolving ecosystem</small>
+              </span>
             </div>
           </div>
 
           <div className="visual-bottomline">
-            <span>HACKYTECH / CORE</span>
             <span>
-              <Sparkles size={13} /> EXPLORATION MODE
+              <span className="mini-square" /> INTERACTIVE 3D
             </span>
+            <span>TOUCH · ROTATE · EXPLORE</span>
           </div>
-        </div>
-
-        <a className="scroll-cue" href="#worlds">
-          <span>SCROLL TO EXPLORE</span>
-          <ArrowDown size={14} />
-        </a>
-      </section>
-
-      <section className="worlds-section section-spacing" id="worlds">
-        <div className="container">
-          <div className="section-heading">
-            <div>
-              <span className="eyebrow">THE ECOSYSTEM</span>
-              <h2 className="font-display section-title">
-                Four worlds. <span className="gradient-text">One vision.</span>
-              </h2>
-            </div>
-            <p>
-              Explore the foundations of an ecosystem designed to connect
-              intelligence with practical work.
-            </p>
-          </div>
-
-          <div className="world-grid">
-            {destinations.map((destination, index) => {
-              const Icon = destination.icon;
-
-              return (
-                <button
-                  className={`world-card ${activeDestination === destination.id ? "world-card-selected" : ""}`}
-                  key={destination.id}
-                  type="button"
-                  onClick={() =>
-                    setActiveDestination((current) =>
-                      current === destination.id ? null : destination.id,
-                    )
-                  }
-                  aria-expanded={activeDestination === destination.id}
-                >
-                  <div className="world-card-top">
-                    <span className="world-number">
-                      WORLD / 0{index + 1}
-                    </span>
-                    <span
-                      className="world-icon"
-                      style={{
-                        color: destination.color,
-                        borderColor: `${destination.color}40`,
-                        backgroundColor: `${destination.color}10`,
-                      }}
-                    >
-                      <Icon size={22} />
-                    </span>
-                  </div>
-
-                  <div className="world-card-content">
-                    <span className="world-subtitle">
-                      {destination.subtitle}
-                    </span>
-                    <h3 className="font-display">{destination.name}</h3>
-                    <p>{destination.description}</p>
-                  </div>
-
-                  <div className="world-card-footer">
-                    <span>
-                      <span className="status-dot" />
-                      {destination.status}
-                    </span>
-                    <ChevronRight
-                      size={18}
-                      className="world-arrow"
-                      aria-hidden="true"
-                    />
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          {selectedDestination && (
-            <div className="destination-detail glass-panel">
-              <div>
-                <span className="eyebrow">WORLD SELECTED</span>
-                <h3 className="font-display">
-                  {selectedDestination.name}
-                </h3>
-                <p>{selectedDestination.description}</p>
-                <span className="detail-note">
-                  This is an exploration preview, not a live backend connection.
-                </span>
-              </div>
-              <button
-                className="secondary-button"
-                type="button"
-                onClick={() => setActiveDestination(null)}
-              >
-                Close preview <X size={15} />
-              </button>
-            </div>
-          )}
         </div>
       </section>
 
-      <section
-        className="architecture-section section-spacing"
-        id="architecture"
-      >
-        <div className="container">
-          <div className="architecture-intro">
-            <span className="eyebrow">THE OPERATING PRINCIPLE</span>
-            <h2 className="font-display section-title">
-              Intelligence with
+      <section className="ecosystem-section section-block" id="worlds">
+        <div className="section-heading">
+          <div>
+            <div className="eyebrow">
+              <span className="section-index">01</span> THE ECOSYSTEM
+            </div>
+            <h2>
+              Four worlds.
               <br />
-              <span className="gradient-text">purpose and control.</span>
+              <span>One direction.</span>
             </h2>
-            <p>
-              HackyTech connects reasoning, knowledge, creation, and action
-              under one principle: powerful systems must remain understandable,
-              secure, and under human control.
-            </p>
+          </div>
+          <p>
+            Each world has a distinct purpose. Explore how the pieces fit
+            together, then select a world to inspect its role.
+          </p>
+        </div>
+
+        <div className="world-grid">
+          {worlds.map((world) => {
+            const Icon = world.icon;
+            const isSelected = selectedWorld === world.id;
+
+            return (
+              <button
+                className={`world-card world-${world.color}${isSelected ? " is-selected" : ""}`}
+                key={world.id}
+                type="button"
+                aria-pressed={isSelected}
+                onClick={() => setSelectedWorld(world.id)}
+              >
+                <div className="world-card-top">
+                  <span className="world-number">{world.number}</span>
+                  <span className="world-icon">
+                    <Icon size={23} strokeWidth={1.7} />
+                  </span>
+                </div>
+
+                <span className="world-category">{world.category}</span>
+                <h3>{world.name}</h3>
+                <p>{world.description}</p>
+
+                <span className="world-card-bottom">
+                  <span>{world.status}</span>
+                  <ArrowRight size={17} />
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className={`world-detail world-${activeWorld.color}`}>
+          <div className="detail-icon">
+            <activeWorld.icon size={24} />
+          </div>
+          <div className="detail-main">
+            <span className="detail-kicker">WORLD SELECTED / {activeWorld.number}</span>
+            <h3>{activeWorld.name}</h3>
+            <p>{activeWorld.description}</p>
+            <div className="capability-list">
+              {activeWorld.capabilities.map((capability) => (
+                <span key={capability}>
+                  <span className="status-dot" />
+                  {capability}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="detail-status">
+            <span className="detail-status-label">CURRENT EXPERIENCE</span>
+            <strong>Exploration preview</strong>
+            <span>Backend integration not connected</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="architecture-section section-block" id="architecture">
+        <div className="section-heading">
+          <div>
+            <div className="eyebrow">
+              <span className="section-index">02</span> THE DESIGN PHILOSOPHY
+            </div>
+            <h2>
+              Built to think.
+              <br />
+              <span>Designed to act.</span>
+            </h2>
+          </div>
+          <p>
+            The long-term architecture connects reasoning, knowledge, creation,
+            execution, and protection — without hiding the boundaries between
+            a concept and a working capability.
+          </p>
+        </div>
+
+        <div className="architecture-panel">
+          <div className="architecture-intro">
+            <div className="architecture-symbol">
+              <Layers3 size={27} />
+            </div>
+            <div>
+              <span className="detail-kicker">THE HACKYTECH MODEL</span>
+              <h3>Five connected principles</h3>
+              <p>
+                A practical framework for building intelligent, accountable
+                technology.
+              </p>
+            </div>
           </div>
 
-          <div className="pillar-list">
-            {pillars.map((pillar) => {
-              const Icon = pillar.icon;
+          <div className="principle-list">
+            {principles.map((principle) => {
+              const Icon = principle.icon;
 
               return (
-                <div className="pillar-row" key={pillar.number}>
-                  <span className="pillar-number">{pillar.number}</span>
-                  <span className="pillar-icon">
+                <div className="principle-row" key={principle.number}>
+                  <span className="principle-number">{principle.number}</span>
+                  <span className="principle-icon">
                     <Icon size={19} />
                   </span>
-                  <strong>{pillar.title}</strong>
-                  <span className="pillar-detail">{pillar.detail}</span>
-                  <ArrowRight size={16} className="pillar-arrow" />
+                  <div className="principle-copy">
+                    <strong>{principle.title}</strong>
+                    <span>{principle.description}</span>
+                  </div>
+                  <ChevronRight className="principle-chevron" size={18} />
                 </div>
               );
             })}
@@ -416,42 +402,47 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="closing-section container">
-        <div className="closing-panel glass-panel">
-          <div className="closing-icon">
-            <Boxes size={25} />
+      <section className="closing-section">
+        <div className="closing-glow" />
+        <div className="closing-content">
+          <div className="eyebrow">
+            <span className="status-dot" /> THE NEXT FRONTIER
           </div>
-          <div>
-            <span className="eyebrow">THE NEXT FRONTIER</span>
-            <h2 className="font-display">
-              The universe is taking shape.
-            </h2>
-            <p>
-              One connected system at a time. Explore the worlds and discover
-              what we can build.
-            </p>
-          </div>
+          <h2>
+            Not just technology.
+            <br />
+            <span>A world being built.</span>
+          </h2>
+          <p>
+            Explore the systems. Understand the connections. Watch the vision
+            become working technology, one validated step at a time.
+          </p>
           <button
-            className="primary-button"
+            className="button-primary"
             type="button"
-            onClick={enterUniverse}
+            onClick={() => scrollToSection("overview")}
           >
-            Explore worlds <ArrowRight size={16} />
+            Return to the universe <ArrowRight size={17} />
           </button>
+        </div>
+        <div className="closing-emblem">
+          <Cpu size={58} strokeWidth={1} />
+          <span>HACKYTECH</span>
+          <small>INTELLIGENCE FIRST</small>
         </div>
       </section>
 
       <footer className="site-footer">
-        <div className="container footer-inner">
-          <a className="footer-brand" href="#home">
-            <Command size={16} />
-            HACKYTECH UNIVERSE
-          </a>
-          <span>Ideas into systems. Systems into possibilities.</span>
-          <a className="back-to-top" href="#home">
-            Back to top ↑
-          </a>
-        </div>
+        <a className="footer-brand" href="#overview">
+          <span className="brand-mark">
+            <Command size={18} />
+          </span>
+          <span>HACKYTECH UNIVERSE</span>
+        </a>
+        <span>Explore boldly. Build responsibly.</span>
+        <span className="footer-note">
+          <Boxes size={14} /> A living technology vision
+        </span>
       </footer>
     </main>
   );
